@@ -1,2 +1,11 @@
-# cpts-notes
-Personal notes, methodology and scripts while studying for Hack The Box CPTS.
+# CPTS Notes
+
+Personal study notes inspired by offensive security training.
+
+## Covered Topics
+- Enumeration
+- Active Directory
+- Linux Privilege Escalation
+- Web Security
+- Pivoting
+- Reporting
