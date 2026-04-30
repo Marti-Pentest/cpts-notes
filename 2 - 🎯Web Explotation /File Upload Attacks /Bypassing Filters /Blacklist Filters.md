@@ -10,7 +10,7 @@ In this scenario, validation exists on the backend, but it is poorly implemented
 
 ## 🧠 How It Works
 Typical implementation:
-```php
+
 $blacklist = array('php', 'php7', 'phps');
 
 The server blocks only specific extensions. If an extension is not in that list, the file is accepted.
