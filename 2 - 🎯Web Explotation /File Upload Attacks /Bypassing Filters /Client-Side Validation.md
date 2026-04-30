@@ -1,62 +1,79 @@
+Aquí tienes el contenido de **Bypassing Client-Side Validation** unificado en un solo bloque de texto plano (Markdown), manteniendo el estilo técnico y directo para tu colección:
+
+```markdown
 # File Upload Attacks - Bypassing Client-Side Validation
 
-## 🛑 What is Client-Side Validation?
-Validation that occurs in the user's browser **before** the file is even sent to the server. Usually implemented via JavaScript or HTML attributes.
+## 🧠 Client-Side Validation
+This protection is inherently weak because it occurs in the user's browser, which the user fully controls. If validation is handled via JavaScript or HTML attributes, it can be bypassed easily.
 
 ---
 
-## 🔍 How to Identify It?
-1. **Instant Feedback:** You get an "Invalid File" error immediately after selecting the file, without any network traffic.
-2. **HTML Attributes:** Look for `accept=".jpg,.png"` in the `<input>` tag.
-3. **Source Code:** Check for JavaScript functions like `validateFile()` or `checkExtension()` triggered on the `onsubmit` event.
+## 🔍 How it Works
+The browser checks the file before sending it to the server.
+**Typical Example:**
+```html
+<input type="file" onchange="checkFile(this)" accept=".jpg,.jpeg,.png">
+```
+**In JavaScript:**
+```javascript
+if (extension !== 'jpg' && extension !== 'jpeg' && extension !== 'png') {
+    alert("Only images are allowed!");
+}
+```
+👉 This code executes locally. The server blindly trusts the client, which is a critical security flaw.
 
 ---
 
-## 🛠️ Bypass Techniques
+## 🚀 Bypass Techniques
 
-### 1. Intercept and Modify (The Burp Suite Method)
-This is the most reliable way as it bypasses the browser's logic entirely.
-1. Rename your malicious file to a "safe" name (e.g., `shell.php` -> `shell.jpg`).
-2. Prepare your upload in the browser and turn on **Interception** in Burp Suite.
-3. Hit **Upload**.
-4. In Burp, locate the `filename="shell.jpg"` part of the POST request.
-5. Change it back to `filename="shell.php"`.
-6. Forward the request.
+### 1. 🧪 Intercept and Modify (The Burp Suite Method)
+The most reliable method in professional pentesting.
+1. **Intercept the Request:** Capture the upload with Burp Suite.
+2. **Modify the Body:**
+   - Find: `filename="image.png"` ➡️ Change to: `filename="shell.php"`
+   - Find: `Content-Type: image/png` ➡️ Keep or change depending on server-side checks.
+   - Replace content with: `<?php system($_GET['cmd']); ?>`
+3. **Forward:** If the backend doesn't re-validate, the file is uploaded.
+4. **Execution:** Access `http://SERVER/uploads/shell.php?cmd=id` ➡️ **RCE achieved**.
 
-### 2. Disable JavaScript
-If the validation is purely JS-based:
-- Disable JavaScript in your browser settings or via DevTools (F12 -> Debugger -> Disable JS).
-- Some sites may break, but the upload form might still function without the "check".
-
-### 3. Modify the Page Source (DOM Manipulation)
-1. Open DevTools (F12).
-2. Find the `<input>` tag.
-3. Remove the `accept` attribute or any `onsubmit` triggers.
-4. Upload your file directly.
+### 2. 🛠️ Frontend Manipulation (DevTools)
+Quick method for CTFs or simple environments.
+1. **Inspect Element:** (CTRL + SHIFT + C) on the upload button.
+2. **Remove Validation:** 
+   - Delete `onchange="checkFile(this)"`
+   - Delete `accept=".jpg,.jpeg,.png"`
+3. **Upload:** Now the browser will let you select and send `.php` files directly.
 
 ---
 
-## ⚙️ Attack Workflow
-1. **Prepare:** Have your `.php` shell ready.
-2. **Rename:** `shell.php` ➡️ `shell.png`
-3. **Capture:** Catch the request in Burp Suite.
-4. **Manipulate:** Change the filename extension back to `.php` in the raw HTTP body.
-5. **Verify:** Check if the file was saved as a script on the server.
+## 🔥 Method Comparison
+| Method | Reliability | Realism |
+| :--- | :--- | :--- |
+| **Burp / Request** | 100% Reliable | 🔥 High |
+| **DevTools** | Fast / Hits limitations | Medium |
 
 ---
 
-## 💡 Why this works
-Developers often trust the client to "clean" the data. However, **any validation happening on the client can be bypassed** because the user has full control over the browser and the data being sent.
+## ⚠️ Indicators of Vulnerability
+- Instant "Only images allowed" alerts (no network lag).
+- Validation code visible in the page source.
+- Upload works perfectly after modifying the raw request.
 
 ---
 
-## 💥 Impact
-Once bypassed, you return to the **Basic Exploitation** stage:
-- Remote Code Execution (RCE).
-- Web Shell access.
-- System takeover.
+## 🛡️ Proper Defense (Server-Side)
+A secure backend must:
+- ✔️ Validate the **real** extension on the server.
+- ✔️ Validate MIME-Type.
+- ✔️ Check **Magic Bytes** (file signatures).
+- ✔️ Rename uploaded files to random strings.
+- ✔️ Store files outside the webroot or in a non-executable directory.
 
 ---
 
-## 🧠 Pentester Note
-Always check if there is a **Server-Side** validation following the client-side one. If the server only checks the MIME-type or uses Blacklists, you'll need further bypassing techniques.
+## 💣 Key Summary
+Client-side validation = UX (User Experience), **NOT** Security.
+1. Bypass via request modification.
+2. Upload web shell.
+3. Remote Code Execution (RCE).
+```
