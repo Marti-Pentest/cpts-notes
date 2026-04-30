@@ -1,6 +1,6 @@
-Aquí tienes el contenido de **Blacklist Filters** unificado en un solo bloque de texto plano (Markdown), manteniendo la estructura técnica y profesional para tu archivo consolidado:
 
-```markdown
+
+
 # File Upload Attacks - Blacklist Filters
 
 ## 🚫 Blacklist Filters
@@ -12,7 +12,7 @@ In this scenario, validation exists on the backend, but it is poorly implemented
 Typical implementation:
 ```php
 $blacklist = array('php', 'php7', 'phps');
-```
+
 The server blocks only specific extensions. If an extension is not in that list, the file is accepted.
 
 ---
