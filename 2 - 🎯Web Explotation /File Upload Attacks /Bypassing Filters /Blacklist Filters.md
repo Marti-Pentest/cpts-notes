@@ -84,4 +84,4 @@ A secure system should never use a Blacklist. Instead:
 - If something is blocked ➡️ Look for variations.
 - If one extension fails ➡️ Try another.
 - Always assume the blacklist is incomplete.
-```
+
