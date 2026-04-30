@@ -1,9 +1,3 @@
-Perfecto, a partir de ahora te lo daré siempre así 👍
-Aquí tienes **un único archivo RAW listo para copiar y pegar en GitHub**:
-
----
-
-```markdown
 # File Upload Attacks - Introduction
 
 ## Overview
@@ -165,6 +159,9 @@ File Upload = Potential Code Execution
 
 ---
 
+## Notes
+
+These notes are part of my practical learning path while studying offensive security and preparing for CPTS.
 ## Notes
 
 These notes are part of my practical learning path while studying offensive security and preparing for CPTS.
