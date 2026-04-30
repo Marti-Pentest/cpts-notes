@@ -1,4 +1,4 @@
-# 📁 File Upload Attacks - Introduction
+# File Upload Attacks - Introduction
 
 ## 📌 Overview
 
@@ -12,7 +12,7 @@ File upload functionality is widely used in modern applications:
 
 ---
 
-## ⚠️ Why Is It Dangerous?
+## Why Is It Dangerous?
 
 Allowing users to upload files means allowing them to write data on the server.
 
@@ -32,8 +32,6 @@ The application allows uploading any type of file without restrictions.
 - Remote Code Execution (RCE)
 - Full server compromise
 
----
-
 ### 2. Weak File Validation
 
 Typical issues:
@@ -44,15 +42,11 @@ Typical issues:
 
 ➡️ Result: filter bypass
 
----
-
 ### 3. Missing Authentication
 
 Upload functionality accessible to unauthenticated users.
 
 🚨 Impact: high risk exposure
-
----
 
 ### 4. Vulnerable Libraries
 
@@ -62,22 +56,11 @@ Outdated frameworks or plugins may introduce upload bypasses.
 
 ## 💥 Real-World Impact
 
-### 🔥 Remote Code Execution (RCE)
-Attackers execute commands on the server.
-
-### 🌐 Stored XSS
-Malicious HTML/SVG executed in user browsers.
-
-### 📄 XXE
-Malicious XML processing.
-
-### 🛑 Denial of Service (DoS)
-Large or malformed files crash the system.
-
-### 🧩 File Overwrite
-Critical files overwritten:
-- config.php  
-- .htaccess  
+- Remote Code Execution (RCE)  
+- Stored XSS  
+- XXE  
+- Denial of Service (DoS)  
+- File overwrite (config.php, .htaccess)  
 
 ---
 
@@ -87,11 +70,11 @@ Critical files overwritten:
 - Weaponized PDFs  
 - Hidden scripts  
 - Compressed files (ZIP/TAR)  
-- SVG with JavaScript  
+- SVG with embedded JavaScript  
 
 ---
 
-## ❌ Why Do These Vulnerabilities Exist?
+## Why Do These Vulnerabilities Exist?
 
 Common developer mistakes:
 
@@ -105,47 +88,13 @@ Common developer mistakes:
 
 ## 🛡️ Secure Implementation (High-Level)
 
-### ✔️ Strict Validation
-- Extension  
-- Real MIME type  
-- Magic bytes  
-
----
-
-### ✔️ Rename Files
-
-user.jpg → random_id.bin
-
----
-
-### ✔️ Store Outside Web Root
-
-❌ /var/www/html/uploads/  
-✔️ /var/app/uploads/  
-
----
-
-### ✔️ Disable Execution
-
-Uploaded files should never be executable.
-
----
-
-### ✔️ Limit File Size
-
-Prevents DoS attacks.
-
----
-
-### ✔️ Scan Files
-
-Use antivirus / sandboxing if needed.
-
----
-
-### ✔️ Least Privilege
-
-Restrict server permissions.
+- Strict validation (extension, MIME, magic bytes)  
+- Rename uploaded files  
+- Store outside web root  
+- Disable execution  
+- Limit file size  
+- Scan files  
+- Apply least privilege  
 
 ---
 
@@ -158,4 +107,4 @@ File Upload = Potential Code Execution
 
 ## 📝 Notes
 
-These notes are part of my learning process while preparing for CPTS and improving practical offensive security skills.
+Part of my practical learning while preparing for CPTS.
