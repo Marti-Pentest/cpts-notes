@@ -1,6 +1,4 @@
-Aquí tienes el contenido de **Bypassing Client-Side Validation** unificado en un solo bloque de texto plano (Markdown), manteniendo el estilo técnico y directo para tu colección:
 
-```markdown
 # File Upload Attacks - Bypassing Client-Side Validation
 
 ## 🧠 Client-Side Validation
@@ -13,7 +11,7 @@ The browser checks the file before sending it to the server.
 **Typical Example:**
 ```html
 <input type="file" onchange="checkFile(this)" accept=".jpg,.jpeg,.png">
-```
+
 **In JavaScript:**
 ```javascript
 if (extension !== 'jpg' && extension !== 'jpeg' && extension !== 'png') {
