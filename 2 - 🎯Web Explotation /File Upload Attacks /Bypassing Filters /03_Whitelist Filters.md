@@ -8,11 +8,11 @@ In this approach, the system only allows specific file types. While theoreticall
 
 ## 🧠 Vulnerable Example (The Regex Trap)
 Many developers use weak Regular Expressions (Regex) to validate filenames:
-
+´´´php
 if (!preg_match('/^.*\.(jpg|jpeg|png|gif)/', $fileName)) {
     echo "Only images are allowed";
 }
-
+´´´
 ⚠️ **Core Issue:** This checks if the string *contains* `.jpg`, but it does NOT ensure the file *ends* with `.jpg`. It is a partial match instead of strict validation.
 
 ---
