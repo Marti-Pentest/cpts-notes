@@ -73,4 +73,3 @@ Client-side validation = UX (User Experience), **NOT** Security.
 1. Bypass via request modification.
 2. Upload web shell.
 3. Remote Code Execution (RCE).
-```
