@@ -45,7 +45,6 @@ for char in '%00' '%0a' '/' '.' ':'; do
 done
 ```
 👉 Use **Burp Intruder** to test these variations and identify which ones bypass the filter and still execute.
-https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Upload%20Insecure%20Files/Extension%20PHP/extensions.lst
 ---
 
 ## ⚠️ Regex Validation Issues
@@ -76,6 +75,8 @@ A secure backend must:
 2. Use Double Extensions to trick partial matches.
 3. Use Character Injection to break file naming logic.
 4. If it executes ➡️ Full RCE.
+
+https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Upload%20Insecure%20Files/Extension%20PHP/extensions.lst
 
 ---
 
