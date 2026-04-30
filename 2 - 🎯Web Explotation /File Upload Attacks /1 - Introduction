@@ -1,0 +1,171 @@
+Perfecto, a partir de ahora te lo daré siempre así 👍
+Aquí tienes **un único archivo RAW listo para copiar y pegar en GitHub**:
+
+---
+
+```markdown
+# File Upload Attacks - Introduction
+
+## Overview
+
+File upload functionality is widely used in modern applications:
+
+- Social platforms → images and videos  
+- Business systems → documents (PDF, Excel, etc.)  
+- Web apps → avatars, reports, backups  
+
+However, it represents one of the most critical attack surfaces when not properly secured.
+
+---
+
+## Why Is It Dangerous?
+
+Allowing users to upload files means allowing them to write data on the server.
+
+User uploads file → potential execution of malicious code
+
+If not properly validated, this can lead to full system compromise.
+
+---
+
+## Common Vulnerabilities
+
+### 1. Arbitrary File Upload
+
+The application allows uploading any type of file without restrictions.
+
+Impact:
+- Remote Code Execution (RCE)
+- Full server compromise
+
+---
+
+### 2. Weak File Validation
+
+Typical issues:
+
+- Only file extension is checked (e.g., .jpg)
+- No validation of actual file content
+- MIME type can be spoofed
+
+Result: filter bypass
+
+---
+
+### 3. Missing Authentication
+
+Upload functionality accessible to unauthenticated users.
+
+Impact: high risk exposure
+
+---
+
+### 4. Vulnerable Libraries
+
+Outdated frameworks or plugins may introduce upload bypasses.
+
+---
+
+## Real-World Impact
+
+### Remote Code Execution (RCE)
+Attackers execute commands on the server.
+
+### Stored XSS
+Malicious HTML/SVG uploaded and executed in user browsers.
+
+### XXE
+Malicious XML file processing.
+
+### Denial of Service (DoS)
+Large or malformed files crash the system.
+
+### File Overwrite
+Critical files overwritten:
+- config.php
+- .htaccess
+
+---
+
+## Common Attack Vectors
+
+- Malicious images  
+- Weaponized PDFs  
+- Hidden scripts  
+- Compressed files (ZIP/TAR)  
+- SVG with embedded JavaScript  
+
+---
+
+## Why Do These Vulnerabilities Exist?
+
+Common developer mistakes:
+
+- Trusting file extensions  
+- Not validating file content  
+- Storing files in web root  
+- Not sanitizing file names  
+- Allowing execution in upload directories  
+
+---
+
+## Secure Implementation (High-Level)
+
+### 1. Strict Validation
+- File extension  
+- Real MIME type  
+- File signature (magic bytes)  
+
+---
+
+### 2. Rename Uploaded Files
+
+user.jpg → random_id.bin
+
+---
+
+### 3. Store Files Outside Web Root
+
+Insecure:
+/var/www/html/uploads/
+
+Secure:
+/var/app/uploads/
+
+---
+
+### 4. Disable Execution
+
+Ensure uploaded files cannot be executed.
+
+---
+
+### 5. File Size Limits
+
+Prevent DoS attacks.
+
+---
+
+### 6. File Scanning
+
+Use antivirus or sandboxing if needed.
+
+---
+
+### 7. Least Privilege
+
+Restrict server permissions.
+
+---
+
+## Key Takeaway
+
+File Upload ≠ Data Storage  
+File Upload = Potential Code Execution  
+
+---
+
+## Notes
+
+These notes are part of my practical learning path while studying offensive security and preparing for CPTS.
+```
