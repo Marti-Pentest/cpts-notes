@@ -12,8 +12,7 @@ The browser checks the file before sending it to the server.
 ```html
 <input type="file" onchange="checkFile(this)" accept=".jpg,.jpeg,.png">
 
-**In JavaScript:**
-```javascript
+
 if (extension !== 'jpg' && extension !== 'jpeg' && extension !== 'png') {
     alert("Only images are allowed!");
 }
