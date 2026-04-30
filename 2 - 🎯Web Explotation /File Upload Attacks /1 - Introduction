@@ -1,124 +1,161 @@
-File Upload Attacks - Introduction
-📌 Overview
+# 📁 File Upload Attacks - Introduction
+
+## 📌 Overview
 
 File upload functionality is widely used in modern applications:
 
-Social platforms → images and videos
-Business systems → documents (PDF, Excel, etc.)
-Web apps → avatars, reports, backups
+- Social platforms → images and videos  
+- Business systems → documents (PDF, Excel, etc.)  
+- Web apps → avatars, reports, backups  
 
 ⚠️ However, it is one of the most critical attack surfaces when not properly secured.
 
-⚠️ Why Is It Dangerous?
+---
+
+## ⚠️ Why Is It Dangerous?
 
 Allowing users to upload files means allowing them to write data on the server.
 
-➡️ User uploads file → potential execution of malicious code
+➡️ User uploads file → potential execution of malicious code  
 
 If not properly validated, this can lead to full system compromise.
 
-🧨 Common Vulnerabilities
-1. Arbitrary File Upload
+---
+
+## 🧨 Common Vulnerabilities
+
+### 1. Arbitrary File Upload
 
 The application allows uploading any type of file without restrictions.
 
 🔥 Impact:
+- Remote Code Execution (RCE)
+- Full server compromise
 
-Remote Code Execution (RCE)
-Full server compromise
-2. Weak File Validation
+---
+
+### 2. Weak File Validation
 
 Typical issues:
 
-Only file extension is checked (.jpg)
-No validation of actual content
-MIME type can be spoofed
+- Only file extension is checked (.jpg)
+- No validation of actual content
+- MIME type can be spoofed
 
 ➡️ Result: filter bypass
 
-3. Missing Authentication
+---
+
+### 3. Missing Authentication
 
 Upload functionality accessible to unauthenticated users.
 
 🚨 Impact: high risk exposure
 
-4. Vulnerable Libraries
+---
+
+### 4. Vulnerable Libraries
 
 Outdated frameworks or plugins may introduce upload bypasses.
 
-💥 Real-World Impact
-🔥 Remote Code Execution (RCE)
+---
 
+## 💥 Real-World Impact
+
+### 🔥 Remote Code Execution (RCE)
 Attackers execute commands on the server.
 
-🌐 Stored XSS
-
+### 🌐 Stored XSS
 Malicious HTML/SVG executed in user browsers.
 
-📄 XXE
-
+### 📄 XXE
 Malicious XML processing.
 
-🛑 Denial of Service (DoS)
-
+### 🛑 Denial of Service (DoS)
 Large or malformed files crash the system.
 
-🧩 File Overwrite
-
+### 🧩 File Overwrite
 Critical files overwritten:
+- config.php  
+- .htaccess  
 
-config.php
-.htaccess
-🎯 Common Attack Vectors
-Malicious images
-Weaponized PDFs
-Hidden scripts
-Compressed files (ZIP/TAR)
-SVG with JavaScript
-❌ Why Do These Vulnerabilities Exist?
+---
+
+## 🎯 Common Attack Vectors
+
+- Malicious images  
+- Weaponized PDFs  
+- Hidden scripts  
+- Compressed files (ZIP/TAR)  
+- SVG with JavaScript  
+
+---
+
+## ❌ Why Do These Vulnerabilities Exist?
 
 Common developer mistakes:
 
-Trusting file extensions
-Not validating file content
-Storing files in web root
-Not sanitizing file names
-Allowing execution in upload directories
-🛡️ Secure Implementation (High-Level)
-✔️ 1. Strict Validation
-Extension
-Real MIME type
-Magic bytes
-✔️ 2. Rename Files
+- Trusting file extensions  
+- Not validating file content  
+- Storing files in web root  
+- Not sanitizing file names  
+- Allowing execution in upload directories  
+
+---
+
+## 🛡️ Secure Implementation (High-Level)
+
+### ✔️ Strict Validation
+- Extension  
+- Real MIME type  
+- Magic bytes  
+
+---
+
+### ✔️ Rename Files
 
 user.jpg → random_id.bin
 
-✔️ 3. Store Outside Web Root
+---
 
-❌ /var/www/html/uploads/
-✔️ /var/app/uploads/
+### ✔️ Store Outside Web Root
 
-✔️ 4. Disable Execution
+❌ /var/www/html/uploads/  
+✔️ /var/app/uploads/  
+
+---
+
+### ✔️ Disable Execution
 
 Uploaded files should never be executable.
 
-✔️ 5. Limit File Size
+---
+
+### ✔️ Limit File Size
 
 Prevents DoS attacks.
 
-✔️ 6. Scan Files
+---
+
+### ✔️ Scan Files
 
 Use antivirus / sandboxing if needed.
 
-✔️ 7. Least Privilege
+---
+
+### ✔️ Least Privilege
 
 Restrict server permissions.
 
-🧠 Key Takeaway
+---
 
-File Upload ≠ Data Storage
-File Upload = Potential Code Execution
+## 🧠 Key Takeaway
 
-📝 Notes
+File Upload ≠ Data Storage  
+File Upload = Potential Code Execution  
+
+---
+
+## 📝 Notes
 
 These notes are part of my learning process while preparing for CPTS and improving practical offensive security skills.
