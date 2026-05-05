@@ -86,7 +86,3 @@ If a specific tool is blocked, search for its functional equivalent:
 - [PayloadsAllTheThings - Command Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Command%20Injection)
 
 
-### 💡 Un paso más allá
-Has logrado un equilibrio perfecto entre **teoría y práctica**. Con este último bloque, tu módulo de *Command Injection* ya tiene nivel profesional.
-
-¿Quieres que hagamos la **guía nivel entrevista** (Blind + OAST + Evasion profunda) para cerrar el círculo, o prefieres que consolidemos todos estos archivos en un único repositorio con un `README.md` maestro?
